@@ -5,68 +5,56 @@ import './App.css'
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [submittedQuery, setSubmittedQuery] = useState('')
   const [agents] = useState([
     {
       id: 1,
       name: 'CodeAssistant AI',
       specialty: 'Code Generation & Debugging',
-      description:
-        'Advanced AI agent specialized in code generation, debugging, and optimization. Supports 50+ programming languages.',
-      expertise: ['Python', 'JavaScript', 'Java', 'C++', 'Go'],
+      description: 'Advanced AI agent specialized in code generation, debugging, and optimization across multiple programming languages.',
+      expertise: ['Python', 'JavaScript', 'Java', 'C++'],
       rating: 4.8,
       users: 5200,
     },
     {
       id: 2,
       name: 'DataMiner Pro',
-      specialty: 'Data Analysis & Visualization',
+      specialty: 'Data Analysis',
       description: 'Intelligent agent for data processing, analytics, and creating insightful visualizations from complex datasets.',
-      expertise: ['Data Analysis', 'Machine Learning', 'Statistics', 'SQL'],
+      expertise: ['Machine Learning', 'Statistics', 'SQL', 'Analysis'],
       rating: 4.7,
       users: 3100,
     },
     {
       id: 3,
-      name: 'ContentCreator AI',
-      specialty: 'Content Generation',
-      description: 'Specialized in creating engaging content for blogs, social media, and marketing campaigns with SEO optimization.',
-      expertise: ['Copywriting', 'SEO', 'Social Media', 'Marketing'],
-      rating: 4.6,
-      users: 2800,
-    },
-    {
-      id: 4,
       name: 'VoiceTranslator',
       specialty: 'Language Translation',
-      description: 'Real-time multilingual translation agent supporting 100+ languages with context awareness.',
+      description: 'Real-time multilingual translation agent supporting 100+ languages with context-aware capabilities.',
       expertise: ['Translation', 'NLP', 'Linguistics', 'Localization'],
       rating: 4.9,
       users: 6100,
     },
-    {
-      id: 5,
-      name: 'ImageAnalyzer',
-      specialty: 'Computer Vision',
-      description: 'Advanced image recognition and analysis agent for object detection, classification, and scene understanding.',
-      expertise: ['Computer Vision', 'Image Processing', 'Deep Learning', 'OCR'],
-      rating: 4.7,
-      users: 4200,
-    },
-    {
-      id: 6,
-      name: 'SecurityGuard',
-      specialty: 'Cybersecurity',
-      description: 'Expert agent for vulnerability detection, threat analysis, and security best practices recommendations.',
-      expertise: ['Cybersecurity', 'Penetration Testing', 'Risk Assessment', 'Compliance'],
-      rating: 4.8,
-      users: 3900,
-    },
   ])
 
-  const filteredAgents = useMemo(() => {
+  // Suggestions for dropdown while typing
+  const suggestions = useMemo(() => {
     if (!searchQuery.trim()) return []
-
     const query = searchQuery.toLowerCase()
+    return agents
+      .filter(
+        (agent) =>
+          agent.name.toLowerCase().includes(query) ||
+          agent.specialty.toLowerCase().includes(query) ||
+          agent.expertise.some((skill) => skill.toLowerCase().includes(query))
+      )
+      .slice(0, 5) // Show only top 5 suggestions
+  }, [searchQuery, agents])
+
+  // Full results only when submitted
+  const filteredAgents = useMemo(() => {
+    if (!submittedQuery.trim()) return []
+
+    const query = submittedQuery.toLowerCase()
     return agents
       .filter(
         (agent) =>
@@ -76,12 +64,25 @@ export default function App() {
           agent.expertise.some((skill) => skill.toLowerCase().includes(query))
       )
       .sort((a, b) => b.rating - a.rating)
-  }, [searchQuery, agents])
+  }, [submittedQuery, agents])
+
+  const handleSearch = (query) => {
+    setSearchQuery(query)
+  }
+
+  const handleSubmit = (query) => {
+    setSubmittedQuery(query)
+  }
 
   return (
-    <div className="app">
-      <SearchBar query={searchQuery} onSearch={setSearchQuery} />
-      {searchQuery.trim() && <AgentResults agents={filteredAgents} query={searchQuery} />}
+    <div className={`app ${searchQuery ? 'search-active' : ''}`}>
+      <SearchBar
+        query={searchQuery}
+        onSearch={handleSearch}
+        onSubmit={handleSubmit}
+        suggestions={suggestions}
+      />
+      {submittedQuery.trim() && <AgentResults agents={filteredAgents} query={submittedQuery} />}
     </div>
   )
 }
