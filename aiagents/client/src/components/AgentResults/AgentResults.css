@@ -1,0 +1,163 @@
+.agent-results-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 1rem 2rem;
+}
+
+.agent-results-header {
+  margin-bottom: 1.5rem;
+  color: #999;
+  font-size: 0.875rem;
+}
+
+.agent-results-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.agent-result-item {
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.agent-result-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #d8d8d8;
+}
+
+.agent-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.agent-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a73e8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.agent-name:hover {
+  color: #1557b0;
+  text-decoration: underline;
+}
+
+.agent-specialty {
+  background: #f0f4fc;
+  color: #1a73e8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.agent-description {
+  margin: 0.75rem 0;
+  color: #545454;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.agent-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e8e8e8;
+  gap: 1rem;
+}
+
+.agent-expertise {
+  flex: 1;
+}
+
+.agent-expertise strong {
+  color: #333;
+  font-size: 0.85rem;
+}
+
+.expertise-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.expertise-tag {
+  background: #e8f0fe;
+  color: #1a73e8;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.agent-stats {
+  display: flex;
+  gap: 1.5rem;
+  white-space: nowrap;
+}
+
+.agent-rating {
+  color: #f39c12;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.agent-users {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #999;
+}
+
+.no-results p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .agent-results-container {
+    padding: 1rem;
+  }
+
+  .agent-result-item {
+    padding: 1rem;
+  }
+
+  .agent-result-header {
+    flex-direction: column;
+  }
+
+  .agent-specialty {
+    align-self: flex-start;
+  }
+
+  .agent-meta {
+    flex-direction: column;
+  }
+
+  .expertise-tags {
+    gap: 0.3rem;
+  }
+
+  .agent-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
